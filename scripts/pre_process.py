@@ -20,9 +20,9 @@ def split_and_save(set, name, num_parts = 4):
 
     # Saving each part into a separate file
     for i, part in enumerate(tt_set_parts):
-        part.to_csv(f'INT_data/{name}_set_parts_{i + 1}.csv', index=False)
+        part.to_csv(f'WHT_data/{name}_set_parts_{i + 1}.csv', index=False)
 
-split_and_save(df, 'INT_weather', num_parts = 30)
+split_and_save(df, 'WHT_weather', num_parts = 30)
 
 # Training files
 files = glob.glob('INT_data/INT_weather_set_parts_*')
