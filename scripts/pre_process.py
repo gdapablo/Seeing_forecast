@@ -1,4 +1,4 @@
-import numpy as np, pandas as pd
+import numpy as np, pandas as pd, glob
 
 # -----------------------------------------------
 #
@@ -7,7 +7,22 @@ import numpy as np, pandas as pd
 # -----------------------------------------------
 
 # --- INT data ---
-import glob
+
+df1 = pd.read_csv('WHTlocal2020-2021.csv')
+df2 = pd.read_csv('WHTlocal2021-2024.csv')
+df = pd.concat([df1, df2])
+
+# At this point we have all the data in the proper format. Now we need to split the file
+def split_and_save(set, name, num_parts = 4):
+    # Splitting the dataset set into n-parts
+    split_indices = [i * len(set) // num_parts for i in range(1, num_parts)]
+    tt_set_parts = np.split(set, split_indices)
+
+    # Saving each part into a separate file
+    for i, part in enumerate(tt_set_parts):
+        part.to_csv(f'INT_data/{name}_set_parts_{i + 1}.csv', index=False)
+
+split_and_save(df, 'INT_weather', num_parts = 30)
 
 # Training files
 files = glob.glob('INT_data/INT_weather_set_parts_*')
@@ -60,15 +75,3 @@ df['second'] = df['sampletime'].dt.second
 
 # Drop the 'sampletime' column
 df.drop(columns=['sampletime'], inplace=True)
-
-# At this point we have all the data in the proper format. Now we need to split the file
-def split_and_save(set, name, num_parts = 4):
-    # Splitting the dataset set into n-parts
-    split_indices = [i * len(set) // num_parts for i in range(1, num_parts)]
-    tt_set_parts = np.split(set, split_indices)
-
-    # Saving each part into a separate file
-    for i, part in enumerate(tt_set_parts):
-        part.to_csv(f'INT_data/{name}_set_parts_{i + 1}.csv', index=False)
-
-split_and_save(df, 'INT_weather', num_parts = 30)
