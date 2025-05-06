@@ -38,7 +38,7 @@ Seeing_forecast/
 
     ML_seeing.ipynb: Trains ML models to predict seeing from meteorological data.
 
-    time_series.ipynb: Uses time series methods (e.g., ARIMA, LSTM) for seeing forecasting.
+    time_series.ipynb: Uses time series methods (e.g., AR(p)) for seeing forecasting.
 
 Open notebooks in Jupyter Lab or Google Colab:
 bash
