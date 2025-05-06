@@ -55,14 +55,33 @@ jupyter lab notebooks/ML_seeing.ipynb
 
     Machine Learning:
 
-        Regression (Random Forest, XGBoost, etc.) for seeing/humidity prediction.
+        Regression (Random Forest, Polynomial regression, and DNN) for seeing/humidity prediction.
 
     Time Series:
 
-        ARIMA, Prophet, or LSTMs for seeing forecasting.
+        AR(p) for seeing and humidity forecasting. Further implementation of SARIMA model is coming.
 
 📝 Requirements
 
-    Python 3.8+
+You will need to install the dependencies (in a dedicated environment) for running the scripts. It is highly recommended to use Conda:
 
-    Libraries: pandas, numpy, scikit-learn, matplotlib, statsmodels, tensorflow (if using LSTMs).
+For Linux:
+```
+conda env create -f environment_linux.yml
+```
+
+then, you have to activate the environment:
+```
+conda activate ml_env_linux
+```
+
+For Windows:
+```
+conda env create -f environment_win.yml
+```
+to activate the environment using conda:
+```
+acc_win
+```
+
+    
