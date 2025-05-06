@@ -43,7 +43,7 @@ Seeing_forecast/
 Open notebooks in Jupyter Lab or Google Colab:
 bash
 
-jupyter lab notebooks/ML_seeing.ipynb
+jupyter-lab notebooks/ML_seeing.ipynb
 
 📊 Data Sources
 
