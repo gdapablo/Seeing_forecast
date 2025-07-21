@@ -4,16 +4,19 @@ from src.preprocess.wht_cleaner import WHTCleaner
 from src.preprocess.int_cleaner import INTCleaner
 from src.preprocess.seeing_cleaner import SeeingCleaner
 from src.visualizer import WeatherVisualizer, SeeingVisualizer
+from src.ml_modeling import MLModelingPipeline
 
 def main():
     parser = argparse.ArgumentParser(description="Seeing Forecast Pipeline")
     parser.add_argument('--task', type=str, required=True,
-                        choices=['clean', 'visualize'], help="Task to perform")
+                        choices=['clean', 'visualize', 'ml'], help="Task to perform")
     parser.add_argument('--dataset', type=str,
                         choices=['WHT', 'INT', 'seeing'], help="Dataset to process or visualize")
     parser.add_argument('--visual_target', type=str,
-                        choices=['temp_month', 'temp_year', 'wind_month', 'wind_year', 'humidity_month', 'humidity_year', 'seeing_month', 'seeing_variation'],
+                        choices=['monthly_means', 'yearly_means', 'seeing_month', 'seeing_variation'],
                         help="Visualization target")
+    parser.add_argument('--model', type=str,
+                        choices=['random_forest', 'polynomial', 'dnn'], help="Modelo ML a entrenar y evaluar")
     parser.add_argument('--save', action='store_true', help="Save the plots to disk")
 
     args = parser.parse_args()
@@ -22,49 +25,55 @@ def main():
         if args.dataset == 'WHT':
             cleaner = WHTCleaner(folder_path='data/WHT_data')
             df_wht = cleaner.load_data()
-            df_clean = cleaner.preprocess(df_wht)
+            df_clean = cleaner.preprocess()
             print("WHT data cleaned and loaded.")
-            # Guardar o procesar df_wht si es necesario
+
         elif args.dataset == 'INT':
             cleaner = INTCleaner(folder_path='data/INT_data')
             df_int = cleaner.load_data()
-            df_clean = cleaner.preprocess(df_int)
+            df_clean = cleaner.preprocess()
             print("INT data cleaned and loaded.")
-            # Guardar o procesar df_int si es necesario
+
         elif args.dataset == 'seeing':
             cleaner = SeeingCleaner(filepath='data/seeing_data.csv')
             df_seeing = cleaner.load_and_preprocess()
             print("Seeing data cleaned and loaded.")
-            # Guardar o procesar df_seeing si es necesario
+
         else:
             print("Specify a valid dataset for cleaning: WHT, INT, o seeing.")
+
+    if args.task == 'ml':
+        if args.model is None:
+            print("Specify the model with --model")
+            return
+
+        cleaner = INTCleaner(folder_path='data/INT_data')
+        df_int = cleaner.load_data()
+        df_clean = cleaner.preprocess()
+
+        cleaner_seeing = SeeingCleaner(filepath='data/seeing_data.csv')
+        seeing = cleaner_seeing.load_and_preprocess()
+
+        print(f"Ejecutando modelo ML: {args.model} ...")
+        pipeline = MLModelingPipeline()
+        pipeline.run_model(df_clean, seeing, args.model)
 
     elif args.task == 'visualize':
         if args.visual_target is None:
             print("Specify --visual_target for visualization.")
             return
 
-        # Visualizaciones que requieren datos INT
-        if args.visual_target in ['temp_month', 'temp_year', 'wind_month', 'wind_year', 'humidity_month', 'humidity_year']:
+        if args.visual_target in ['monthly_means', 'yearly_means']:
             cleaner = INTCleaner(folder_path='data/INT_data')
             df_int = cleaner.load_data()
-            df_clean = cleaner.preprocess(df_int)
+            df_clean = cleaner.preprocess()
             visualizer = WeatherVisualizer()
 
-            if args.visual_target == 'temp_month':
-                visualizer.plot_mean_temperature_per_month(data=df_int, save=args.save)
-            elif args.visual_target == 'temp_year':
-                visualizer.plot_mean_temperature_per_year(data=df_int, save=args.save)
-            elif args.visual_target == 'wind_month':
-                visualizer.plot_mean_wind_per_month(data=df_int, save=args.save)
-            elif args.visual_target == 'wind_year':
-                visualizer.plot_mean_wind_per_year(data=df_int, save=args.save)
-            elif args.visual_target == 'humidity_month':
-                visualizer.plot_mean_humidity_per_month(data=df_int, save=args.save)
-            elif args.visual_target == 'humidity_year':
-                visualizer.plot_mean_humidity_per_year(data=df_int, save=args.save)
+            if args.visual_target == 'monthly_means':
+                visualizer.plot_monthly_means(data=df_int, save=args.save)
+            elif args.visual_target == 'yearly_means':
+                visualizer.plot_yearly_means(data=df_int, save=args.save)
 
-        # Visualizaciones del seeing
         elif args.visual_target == 'seeing_month':
             cleaner = SeeingCleaner(filepath='data/seeing_data.csv')
             df_seeing = cleaner.load_and_preprocess()
