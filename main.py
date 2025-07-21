@@ -21,12 +21,14 @@ def main():
     if args.task == 'clean':
         if args.dataset == 'WHT':
             cleaner = WHTCleaner(folder_path='data/WHT_data')
-            df_wht = cleaner.load_and_preprocess()
+            df_wht = cleaner.load_data()
+            df_clean = cleaner.preprocess(df_wht)
             print("WHT data cleaned and loaded.")
             # Guardar o procesar df_wht si es necesario
         elif args.dataset == 'INT':
             cleaner = INTCleaner(folder_path='data/INT_data')
-            df_int = cleaner.load_and_preprocess()
+            df_int = cleaner.load_data()
+            df_clean = cleaner.preprocess(df_int)
             print("INT data cleaned and loaded.")
             # Guardar o procesar df_int si es necesario
         elif args.dataset == 'seeing':
@@ -35,17 +37,18 @@ def main():
             print("Seeing data cleaned and loaded.")
             # Guardar o procesar df_seeing si es necesario
         else:
-            print("Por favor especifica un dataset válido para limpieza: WHT, INT, o seeing.")
+            print("Specify a valid dataset for cleaning: WHT, INT, o seeing.")
 
     elif args.task == 'visualize':
         if args.visual_target is None:
-            print("Por favor especifica --visual_target para visualización.")
+            print("Specify --visual_target for visualization.")
             return
 
         # Visualizaciones que requieren datos INT
         if args.visual_target in ['temp_month', 'temp_year', 'wind_month', 'wind_year', 'humidity_month', 'humidity_year']:
             cleaner = INTCleaner(folder_path='data/INT_data')
-            df_int = cleaner.load_and_preprocess()
+            df_int = cleaner.load_data()
+            df_clean = cleaner.preprocess(df_int)
             visualizer = WeatherVisualizer()
 
             if args.visual_target == 'temp_month':
@@ -75,9 +78,9 @@ def main():
             visualizer.plot_minute_seeing_variation(data=df_seeing, save=args.save)
 
         else:
-            print("Visual_target desconocido. Por favor especifica una opción válida.")
+            print("Visual_target unknown.")
     else:
-        print("Tarea desconocida. Por favor especifica --task clean o visualize.")
+        print("Unknown task. Specify a valid one --task clean or visualize.")
 
 if __name__ == '__main__':
     main()
