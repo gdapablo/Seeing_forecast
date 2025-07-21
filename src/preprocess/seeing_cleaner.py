@@ -1,53 +1,49 @@
 import pandas as pd
 
 class SeeingCleaner:
+    """
+    Class to load and preprocess seeing data from CSV.
+
+    Parameters
+    ----------
+    filepath : str
+        Path to the CSV file containing seeing data.
+
+    Methods
+    -------
+    load_and_preprocess()
+        Loads the CSV, converts date/time columns, extracts datetime components,
+        drops original columns, and returns the cleaned DataFrame.
+    """
     def __init__(self, filepath: str):
-        """
-        Initialize the SeeingCleaner with the path to the CSV file.
-
-        Parameters
-        ----------
-        filepath : str
-            Path to the seeing data CSV file.
-        """
         self.filepath = filepath
-        self.df = None
 
-    def load_data(self) -> pd.DataFrame:
+    def load_and_preprocess(self) -> pd.DataFrame:
         """
-        Load the seeing data from a CSV file.
+        Load the seeing CSV and preprocess it.
+
+        - Converts 'Date' to datetime.
+        - Converts 'Time' to timedelta and extracts hour, minute, second.
+        - Extracts year, month, day from 'Date'.
+        - Drops original 'Date' and 'Time' columns.
 
         Returns
         -------
         pd.DataFrame
-            Raw DataFrame loaded from the file.
+            Preprocessed DataFrame ready for visualization or analysis.
         """
-        self.df = pd.read_csv(self.filepath)
-        return self.df
+        seeing = pd.read_csv(self.filepath)
+        seeing['Date'] = pd.to_datetime(seeing['Date'])
+        seeing['Time'] = pd.to_timedelta(seeing['Time'])
 
-    def preprocess(self) -> pd.DataFrame:
-        """
-        Preprocess the seeing data:
-        - Convert date and time to datetime
-        - Extract year, month, day, hour, minute, second
-        - Drop original date and time columns
+        seeing['year'] = seeing['Date'].dt.year
+        seeing['month'] = seeing['Date'].dt.month
+        seeing['day'] = seeing['Date'].dt.day
 
-        Returns
-        -------
-        pd.DataFrame
-            Cleaned and time-structured DataFrame.
-        """
-        self.df['Date'] = pd.to_datetime(self.df['Date'])
-        self.df['Time'] = pd.to_datetime(self.df['Time'])
+        seeing['hour'] = seeing['Time'].dt.components.hours
+        seeing['minute'] = seeing['Time'].dt.components.minutes
+        seeing['second'] = seeing['Time'].dt.components.seconds
 
-        self.df['year'] = self.df['Date'].dt.year
-        self.df['month'] = self.df['Date'].dt.month
-        self.df['day'] = self.df['Date'].dt.day
+        seeing.drop(columns=['Date', 'Time'], inplace=True)
 
-        self.df['hour'] = self.df['Time'].dt.hour
-        self.df['minute'] = self.df['Time'].dt.minute
-        self.df['second'] = self.df['Time'].dt.second
-
-        self.df.drop(columns=['Date', 'Time'], inplace=True)
-
-        return self.df
+        return seeing

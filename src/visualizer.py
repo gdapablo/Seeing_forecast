@@ -79,7 +79,7 @@ class SeeingVisualizer:
     Methods:
         plot_monthly_seeing(data, save=False):
             Plots monthly average seeing and deviation from minimum.
-        plot_hourly_variation(data, save=False):
+        plot_minute_seeing_variation(data, save=False):
             Plots per-minute variation in seeing across the day.
     """
 
@@ -106,7 +106,7 @@ class SeeingVisualizer:
             plt.savefig("plots/monthly_seeing.png")
         plt.show()
 
-    def plot_hourly_variation(self, data, save=False):
+    def plot_minute_seeing_variation(self, data, save=False):
         minute_seeing_difference = data.groupby([data['hour'], data['minute']])['Seeing'].apply(lambda x: x.max() - x.min())
 
         plt.figure(figsize=(10, 6))
