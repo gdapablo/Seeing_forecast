@@ -1,6 +1,6 @@
 # src/main.py
-from preprocess.wht_cleaner import WHTCleaner
-from utils.resampler import resample_weather_data
+from preprocess.wht_cleaner import INTCleaner
+from preprocess.utils.resampler import resample_weather_data
 
 def main():
     """
@@ -12,7 +12,7 @@ def main():
     - Saves the result as a CSV
     """
     # Load and preprocess WHT
-    cleaner = WHTCleaner(folder_path='../data/WHT_data')
+    cleaner = INTCleaner(folder_path='../data/INT_data')
     df_raw = cleaner.load_data()
     df_clean = cleaner.preprocess()
 
