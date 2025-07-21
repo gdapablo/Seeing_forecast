@@ -1,129 +1,121 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+# src/visualizer.py
 
+import matplotlib.pyplot as plt
+import os
 
 class WeatherVisualizer:
     """
-    Class for generating weather visualizations from INT meteorological data.
+    A class for creating weather-related visualizations.
+
+    Methods:
+        plot_monthly_means(data, save=False):
+            Generates and optionally saves bar plots of temperature, wind speed, and humidity by month.
+        plot_yearly_means(data, save=False):
+            Generates and optionally saves bar plots of temperature, wind speed, and humidity by year.
     """
 
-    def __init__(self, df: pd.DataFrame):
-        """
-        Initializes the visualizer with a DataFrame.
+    def __init__(self):
+        os.makedirs("plots", exist_ok=True)
 
-        Parameters:
-        df (pd.DataFrame): Cleaned and processed INT weather dataset.
-        """
-        self.df = df
-
-    def plot_monthly_means(self):
-        """
-        Plot mean temperature, wind speed, and humidity grouped by month.
-        """
-        mean_temp = self.df.groupby('month')['localairtemperature'].mean()
-        mean_wind = self.df.groupby('month')['localwindspeed'].mean()
-        mean_humidity = self.df.groupby('month')['localhumidity'].mean()
+    def plot_monthly_means(self, data, save=False):
+        mean_temp_per_month = data.groupby('month')['localairtemperature'].mean()
+        mean_wind_per_month = data.groupby('month')['localwindspeed'].mean()
+        mean_humi_per_month = data.groupby('month')['localhumidity'].mean()
 
         fig, ax = plt.subplots(1, 3, figsize=(15, 5))
         ax = ax.ravel()
 
-        mean_temp.plot(kind='bar', color='skyblue', ax=ax[0])
-        mean_wind.plot(kind='bar', color='skyblue', ax=ax[1])
-        mean_humidity.plot(kind='bar', color='skyblue', ax=ax[2])
+        mean_temp_per_month.plot(kind='bar', color='skyblue', ax=ax[0])
+        mean_wind_per_month.plot(kind='bar', color='skyblue', ax=ax[1])
+        mean_humi_per_month.plot(kind='bar', color='skyblue', ax=ax[2])
 
         ax[0].set_title('Mean Temperature per Month')
         ax[1].set_title('Mean Wind Speed per Month')
         ax[2].set_title('Mean Humidity per Month')
-
-        for i in range(3):
-            ax[i].set_xlabel('Month')
-        ax[0].set_ylabel('Temperature (°C)')
-        ax[1].set_ylabel('Wind Speed (km/h)')
-        ax[2].set_ylabel('Humidity (%)')
+        ax[0].set_xlabel('Month')
+        ax[1].set_xlabel('Month')
+        ax[2].set_xlabel('Month')
+        ax[0].set_ylabel('Mean Temperature (°C)')
+        ax[1].set_ylabel('Mean Wind Speed (km/h)')
+        ax[2].set_ylabel('Mean Humidity (%)')
 
         plt.tight_layout()
+        if save:
+            plt.savefig("plots/monthly_weather_means.png")
         plt.show()
 
-    def plot_yearly_means(self):
-        """
-        Plot mean temperature, wind speed, and humidity grouped by year.
-        """
-        mean_temp = self.df.groupby('year')['localairtemperature'].mean()
-        mean_wind = self.df.groupby('year')['localwindspeed'].mean()
-        mean_humidity = self.df.groupby('year')['localhumidity'].mean()
+    def plot_yearly_means(self, data, save=False):
+        mean_temp_per_year = data.groupby('year')['localairtemperature'].mean()
+        mean_wind_per_year = data.groupby('year')['localwindspeed'].mean()
+        mean_humi_per_year = data.groupby('year')['localhumidity'].mean()
 
         fig, ax = plt.subplots(1, 3, figsize=(15, 5))
         ax = ax.ravel()
 
-        mean_temp.plot(kind='bar', color='red', ax=ax[0])
-        mean_wind.plot(kind='bar', color='red', ax=ax[1])
-        mean_humidity.plot(kind='bar', color='red', ax=ax[2])
+        mean_temp_per_year.plot(kind='bar', color='red', ax=ax[0])
+        mean_wind_per_year.plot(kind='bar', color='red', ax=ax[1])
+        mean_humi_per_year.plot(kind='bar', color='red', ax=ax[2])
 
         ax[0].set_title('Mean Temperature per Year')
         ax[1].set_title('Mean Wind Speed per Year')
         ax[2].set_title('Mean Humidity per Year')
-
-        for i in range(3):
-            ax[i].set_xlabel('Year')
-        ax[0].set_ylabel('Temperature (°C)')
-        ax[1].set_ylabel('Wind Speed (km/h)')
-        ax[2].set_ylabel('Humidity (%)')
+        ax[0].set_xlabel('Year')
+        ax[1].set_xlabel('Year')
+        ax[2].set_xlabel('Year')
+        ax[0].set_ylabel('Mean Temperature (°C)')
+        ax[1].set_ylabel('Mean Wind Speed (km/h)')
+        ax[2].set_ylabel('Mean Humidity (%)')
 
         plt.tight_layout()
+        if save:
+            plt.savefig("plots/yearly_weather_means.png")
         plt.show()
 
 
 class SeeingVisualizer:
     """
-    Class for generating seeing-related visualizations.
+    A class for creating visualizations of seeing measurements.
+
+    Methods:
+        plot_monthly_seeing(data, save=False):
+            Plots monthly average seeing and deviation from minimum.
+        plot_hourly_variation(data, save=False):
+            Plots per-minute variation in seeing across the day.
     """
 
-    def __init__(self, df: pd.DataFrame):
-        """
-        Initializes the visualizer with the seeing DataFrame.
+    def __init__(self):
+        os.makedirs("plots", exist_ok=True)
 
-        Parameters:
-        df (pd.DataFrame): Cleaned seeing dataset.
-        """
-        self.df = df
-
-    def plot_monthly_seeing(self):
-        """
-        Plot mean seeing per month and the difference w.r.t. the minimum.
-        """
-        mean_seeing = self.df.groupby('month')['Seeing'].mean()
-        diff_seeing = mean_seeing - mean_seeing.min()
+    def plot_monthly_seeing(self, data, save=False):
+        mean_seeing_per_month = data.groupby('month')['Seeing'].mean()
 
         fig, ax = plt.subplots(1, 2, figsize=(10, 5), sharey=True)
         ax = ax.ravel()
 
-        mean_seeing.plot(kind='bar', color='red', ax=ax[0])
-        diff_seeing.plot(kind='bar', color='orange', ax=ax[1])
+        mean_seeing_per_month.plot(kind='bar', color='red', ax=ax[0])
+        (mean_seeing_per_month - min(mean_seeing_per_month)).plot(kind='bar', color='orange', ax=ax[1])
 
         ax[0].set_title('Mean Seeing per Month')
-        ax[1].set_title('Δ Seeing vs Minimum')
-
-        for i in range(2):
-            ax[i].set_xlabel('Month')
-        ax[0].set_ylabel('Seeing (arcsec)')
+        ax[1].set_title('Mean Seeing Deviation from Minimum')
+        ax[0].set_xlabel('Month')
+        ax[1].set_xlabel('Month')
+        ax[0].set_ylabel('Mean Seeing (arcsec)')
 
         plt.tight_layout()
+        if save:
+            plt.savefig("plots/monthly_seeing.png")
         plt.show()
 
-    def plot_seeing_variation_by_minute(self):
-        """
-        Plot the difference between max and min seeing per minute.
-        """
-        diff_by_minute = self.df.groupby(
-            [self.df['hour'], self.df['minute']]
-        )['Seeing'].apply(lambda x: x.max() - x.min())
+    def plot_hourly_variation(self, data, save=False):
+        minute_seeing_difference = data.groupby([data['hour'], data['minute']])['Seeing'].apply(lambda x: x.max() - x.min())
 
         plt.figure(figsize=(10, 6))
-        diff_by_minute.plot(marker='o', linestyle='-')
-        plt.title('Difference Between Max and Min Seeing per Minute')
+        minute_seeing_difference.plot(marker='o', linestyle='-')
+        plt.title('Difference between Maximum and Minimum Seeing per Minute')
         plt.xlabel('Time (Hour:Minute)')
-        plt.ylabel('Difference (arcsec)')
+        plt.ylabel('Difference (Seeing)')
         plt.grid(True)
         plt.xticks(rotation=45)
-        plt.tight_layout()
+        if save:
+            plt.savefig("plots/minute_seeing_variation.png")
         plt.show()
