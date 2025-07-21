@@ -87,14 +87,14 @@ class DataPreprocessor:
         df.reset_index(drop=True, inplace=True)
         target = df['Seeing']
         data = df.drop(columns='Seeing')
-        
+
         cols_to_int = ['hour', 'day', 'month', 'year', 'minute']
         data = pd.get_dummies(data, columns=cols_to_int)
 
         bool_cols = data.select_dtypes(include=['bool']).columns
         data[bool_cols] = data[bool_cols].astype('int32')
 
-        cols_to_scale = ['windspeed', 'airtemperature', 'relativehumidity']
+        cols_to_scale = ['localwindspeed', 'localairtemperature', 'localhumidity']
         scaler = preprocessing.MinMaxScaler()
         data[cols_to_scale] = scaler.fit_transform(data[cols_to_scale])
 
@@ -251,7 +251,7 @@ class DenseNeuralNetworkModel:
 
         model.compile(optimizer='adam', loss='mean_squared_error', metrics=['mae'])
 
-        model.fit(X_train, y_train_scaled, epochs=50, batch_size=32, validation_split=0.2, verbose=0)
+        model.fit(X_train, y_train_scaled, epochs=50, batch_size=32, validation_split=0.2, verbose=1)
 
         loss, mae = model.evaluate(X_test, y_test_scaled, verbose=0)
         print("Dense Neural Network:")
@@ -289,12 +289,12 @@ class DenseNeuralNetworkModel:
 
 class MLModelingPipeline:
     """
-    Pipeline para ejecutar el flujo completo de ML: preparación, preprocesamiento y entrenamiento/evaluación de modelos.
+    Pipeline to execute ML models: preliminars, preprocessing and training/evaluation.
 
-    Métodos:
+    Methods:
     --------
     run_model(data_resample, seeing, model_name) -> None
-        Ejecuta el modelo especificado ('random_forest', 'polynomial', 'dnn').
+        Execute the specified model ('random_forest', 'polynomial', 'dnn').
     """
 
     def __init__(self):
@@ -331,4 +331,4 @@ class MLModelingPipeline:
         elif model_name == 'dnn':
             self.dnn_model.train_and_evaluate(X_train, X_test, y_train, y_test)
         else:
-            print(f"Modelo desconocido: {model_name}. Opciones válidas: 'random_forest', 'polynomial', 'dnn'.")
+            print(f"Unknown model: {model_name}. Valid options: 'random_forest', 'polynomial', 'dnn'.")

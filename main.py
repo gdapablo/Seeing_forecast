@@ -16,7 +16,7 @@ def main():
                         choices=['monthly_means', 'yearly_means', 'seeing_month', 'seeing_variation'],
                         help="Visualization target")
     parser.add_argument('--model', type=str,
-                        choices=['random_forest', 'polynomial', 'dnn'], help="Modelo ML a entrenar y evaluar")
+                        choices=['random_forest', 'polynomial', 'dnn'], help="ML model to train and evaluate")
     parser.add_argument('--save', action='store_true', help="Save the plots to disk")
 
     args = parser.parse_args()
@@ -54,7 +54,7 @@ def main():
         cleaner_seeing = SeeingCleaner(filepath='data/seeing_data.csv')
         seeing = cleaner_seeing.load_and_preprocess()
 
-        print(f"Ejecutando modelo ML: {args.model} ...")
+        print(f"Running ML model: {args.model} ...")
         pipeline = MLModelingPipeline()
         pipeline.run_model(df_clean, seeing, args.model)
 
