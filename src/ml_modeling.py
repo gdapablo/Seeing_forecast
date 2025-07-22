@@ -13,30 +13,30 @@ from tensorflow.keras.layers import Dense
 
 class DataPreparer:
     """
-    Clase para preparar y combinar los datos necesarios para el modelado.
+    Class for preleminarly prepare and combine the seeing and met data for further training.
 
-    Métodos:
+    Methods:
     --------
     prepare_data(data_resample: pd.DataFrame, seeing: pd.DataFrame) -> pd.DataFrame
-        Combina y limpia los datos resampleados y de seeing para análisis de ML.
+        Combine and clean seeing data for ML train preparation.
     """
 
     @staticmethod
     def prepare_data(data_resample: pd.DataFrame, seeing: pd.DataFrame) -> pd.DataFrame:
         """
-        Prepara los datos para modelado.
+        Prepare the data for modelling.
 
         Inputs:
         -------
         data_resample : pd.DataFrame
-            Datos meteorológicos resampleados.
+            Resampled weather data.
         seeing : pd.DataFrame
-            Datos de seeing con columnas año, mes, día, hora, minuto, segundo.
+            Seeing data with columns year, month, day, hour, minute, second.
 
         Output:
         -------
         combined : pd.DataFrame
-            DataFrame combinado y limpio listo para ML.
+            Combined DataFrame ready for ML training.
         """
         seeing['Datetime'] = pd.to_datetime(seeing[['year', 'month', 'day', 'hour', 'minute', 'second']])
         seeing_resample = seeing.resample('10T', on='Datetime').mean()
@@ -56,29 +56,29 @@ class DataPreparer:
 
 class DataPreprocessor:
     """
-    Clase para preprocesar los datos combinados y preparar variables para ML.
+    Class for preprocessing data and combine them for ML training.
 
-    Métodos:
+    Methods:
     --------
     preprocess(combined: pd.DataFrame) -> tuple
-        Devuelve los datos separados en train/test listos para modelar y el scaler de features.
+        Returns the data as train and test datasets ready for modeling and for scale the features.
     """
 
     def preprocess(self, combined: pd.DataFrame) -> tuple:
         """
-        Preprocesa datos: convierte dummies, escala variables, separa features y target.
+        Preprocessing data: convert into dummy variables, scale the variables, split between features and target.
 
         Input:
         ------
         combined : pd.DataFrame
-            DataFrame combinado de datos resampleados y seeing.
+            Combined DataFrame of resampled data and seeing.
 
         Output:
         -------
         (X_train, X_test, y_train, y_test) : tuple
-            Datos de entrenamiento y test separados.
+            Training and testing sets.
         scaler : sklearn.preprocessing.MinMaxScaler
-            Scaler usado para escalar columnas numéricas.
+            Scaler used for scaling the numerical columns.
         """
         df = combined.copy()
         if 'seeing_diff' in df.columns:
@@ -103,29 +103,29 @@ class DataPreprocessor:
 
 class RandomForestModel:
     """
-    Modelo de regresión basado en Random Forest.
+    Random Forest model regression.
 
-    Métodos:
+    Methods:
     --------
     train_and_evaluate(X_train, X_test, y_train, y_test) -> RandomForestRegressor
-        Entrena y evalúa el modelo, imprime métricas.
+        Train and evaluate the model show the metrics as output.
     """
 
     def train_and_evaluate(self, X_train, X_test, y_train, y_test):
         """
-        Entrena el modelo y calcula MAE, MSE y R2 sobre test.
+        Training the model and evaluates MAE, MSE and R2 over test.
 
         Inputs:
         -------
         X_train, X_test : pd.DataFrame o np.array
-            Datos de entrada para entrenamiento y prueba.
+            input data for train and testing sets.
         y_train, y_test : pd.Series o np.array
-            Valores objetivo para entrenamiento y prueba.
+            target values for training and testing.
 
         Output:
         -------
         model : RandomForestRegressor
-            Modelo entrenado.
+            Trained model.
         """
         model = RandomForestRegressor(n_estimators=500, random_state=0, n_jobs=10)
         model.fit(X_train, y_train)
@@ -145,27 +145,27 @@ class RandomForestModel:
 
 class PolynomialRegressionModel:
     """
-    Modelo de regresión polinómica para diferentes grados.
+    Polynomial regresion model for different degrees.
 
-    Métodos:
+    Methods:
     --------
     evaluate_polynomial_degrees(X_train, y_train, X_test, y_test, max_degree=6) -> None
-        Evalúa y grafica métricas para diferentes grados del polinomio.
+        Evaluate and plot the metrics for different polynomial degrees.
     """
 
     def evaluate_polynomial_degrees(self, X_train, y_train, X_test, y_test, max_degree=6):
         """
-        Entrena modelos polinómicos y grafica MAE, MSE y R2 en train para grados 1 a max_degree.
+        Train and plot polynomial models shwoing MAE, MSE y R2 from degree 1 to max_degree.
 
         Inputs:
         -------
-        X_train, X_test, y_train, y_test : datasets para entrenamiento y prueba
+        X_train, X_test, y_train, y_test : training and testing datasets
         max_degree : int
-            Grado máximo del polinomio a evaluar.
+            max degree of the polynomial
 
         Output:
         -------
-        None (genera gráficos)
+        None (generate plots)
         """
         mse_train_list = []
         mae_train_list = []
@@ -220,7 +220,7 @@ class DenseNeuralNetworkModel:
     """
     Modelo de red neuronal densa para regresión.
 
-    Métodos:
+    Methods:
     --------
     train_and_evaluate(X_train, X_test, y_train, y_test) -> None
         Entrena, evalúa el modelo y genera gráficos de diagnóstico.
