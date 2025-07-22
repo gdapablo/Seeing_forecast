@@ -16,7 +16,8 @@ Key Features:
 
 📂 Repository Structure
 
-Seeing_forecast/  
+Seeing_forecast/
+└── main.py                       # Main script for processing, cleaning, visualization and ML modelling of the data
 ├── data/  
 │   ├── INT_data/                 # Historical meteorological data (INT)  
 │   ├── WHT_data/                 # Historical meteorological data (WHT)  
@@ -27,8 +28,18 @@ Seeing_forecast/
 │   ├── ML_seeing.ipynb           # Seeing prediction (preprocessing + ML)  
 │   └── time_series.ipynb         # Time series forecasting for seeing  
 │  
-└── scripts/  
-    └── pre_process.py            # Script to preprocess raw INT/WHT data  
+└── src/  
+|    └── pre_process.py            # Script to preprocess raw INT/WHT data
+|    ├── ml_modelling.py           # Script for ML models selection (DNN, RFR, Polynomial) and training
+|    ├── visualizer.py             # Visualization and plots of weather and seeing data
+|    └── preprocess/
+|          ├── int_cleaner.py      # Loading and preprocessing of INT weather data
+|          ├── wht_cleaner.py      # Loading and preprocessing of WHT weather data
+|          ├── seeing_cleaner.py   # Loading and preprocessing archival seeing data
+|          └── utils/
+|                └── resampler.py       # Script to weather data to a specified time frequency
+|
+└── plots/
 
 🛠️ Usage
 
@@ -83,5 +94,3 @@ to activate the environment using conda:
 ```
 acc_win
 ```
-
-    

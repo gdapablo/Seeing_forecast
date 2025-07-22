@@ -18,6 +18,7 @@ class INTCleaner:
         self.folder_path = folder_path
         self.df = None
 
+    # I use anotators to define the data type of the function
     def load_data(self) -> pd.DataFrame:
         """
         Load and concatenate all CSV files from the folder.
