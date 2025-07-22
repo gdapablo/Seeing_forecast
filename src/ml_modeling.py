@@ -111,7 +111,7 @@ class RandomForestModel:
         Train and evaluate the model show the metrics as output.
     """
 
-    def train_and_evaluate(self, X_train, X_test, y_train, y_test):
+    def train_and_evaluate(self, X_train, X_test, y_train, y_test, save=False):
         """
         Training the model and evaluates MAE, MSE and R2 over test.
 
@@ -153,7 +153,7 @@ class PolynomialRegressionModel:
         Evaluate and plot the metrics for different polynomial degrees.
     """
 
-    def evaluate_polynomial_degrees(self, X_train, y_train, X_test, y_test, max_degree=6):
+    def evaluate_polynomial_degrees(self, X_train, y_train, X_test, y_test, max_degree=6, save=False):
         """
         Train and plot polynomial models shwoing MAE, MSE y R2 from degree 1 to max_degree.
 
@@ -226,7 +226,7 @@ class DenseNeuralNetworkModel:
         Train, evaluate and plot DNN model.
     """
 
-    def train_and_evaluate(self, X_train, X_test, y_train, y_test):
+    def train_and_evaluate(self, X_train, X_test, y_train, y_test, save=False):
         """
         Train a DNN model and estimates MSE, MAE, R2 and generate plots
 
@@ -269,6 +269,8 @@ class DenseNeuralNetworkModel:
         plt.xlabel('Real values (scaled)')
         plt.ylabel('Predicted values')
         plt.title('DNN Predictions vs Real Values')
+        if save:
+            plt.savefig("plots/dnn_predicted_vs_real.png")
         plt.show()
 
         df_comparison = pd.DataFrame({'Real': y_test_scaled.flatten(), 'Predicted': y_pred.flatten()})
@@ -276,6 +278,8 @@ class DenseNeuralNetworkModel:
         plt.figure(figsize=(10, 6))
         sns.boxplot(data=df_comparison)
         plt.title('Boxplot of Real vs Predicted (DNN)')
+        if save:
+            plt.savefig("plots/dnn_boxplot.png")
         plt.show()
 
         residuals = y_test_scaled.flatten() - y_pred.flatten()
@@ -284,6 +288,8 @@ class DenseNeuralNetworkModel:
         plt.xlabel('Residuals')
         plt.ylabel('Frequency')
         plt.title('Histogram of Residuals (DNN)')
+        if save:
+            plt.savefig("plots/dnn_histogram.png")
         plt.show()
 
 
@@ -304,7 +310,7 @@ class MLModelingPipeline:
         self.poly_model = PolynomialRegressionModel()
         self.dnn_model = DenseNeuralNetworkModel()
 
-    def run_model(self, data_resample: pd.DataFrame, seeing: pd.DataFrame, model_name: str) -> None:
+    def run_model(self, data_resample: pd.DataFrame, seeing: pd.DataFrame, model_name: str, save=False) -> None:
         """
         Runs the model_name with the specified data.
 
@@ -325,10 +331,10 @@ class MLModelingPipeline:
         (X_train, X_test, y_train, y_test), _ = self.preprocessor.preprocess(combined)
 
         if model_name == 'random_forest':
-            self.rf_model.train_and_evaluate(X_train, X_test, y_train, y_test)
+            self.rf_model.train_and_evaluate(X_train, X_test, y_train, y_test, save=False)
         elif model_name == 'polynomial':
-            self.poly_model.evaluate_polynomial_degrees(X_train, y_train, X_test, y_test)
+            self.poly_model.evaluate_polynomial_degrees(X_train, y_train, X_test, y_test, save=False)
         elif model_name == 'dnn':
-            self.dnn_model.train_and_evaluate(X_train, X_test, y_train, y_test)
+            self.dnn_model.train_and_evaluate(X_train, X_test, y_train, y_test, save=False)
         else:
             print(f"Unknown model: {model_name}. Valid options: 'random_forest', 'polynomial', 'dnn'.")

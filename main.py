@@ -35,7 +35,7 @@ def main():
 
         print(f"Running ML model: {args.model} ...")
         pipeline = MLModelingPipeline()
-        pipeline.run_model(df_clean, seeing, args.model)
+        pipeline.run_model(df_clean, seeing, args.model, save=args.save)
 
     elif args.task == 'visualize':
         if args.visual_target is None:
