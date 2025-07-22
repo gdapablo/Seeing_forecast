@@ -39,7 +39,7 @@ Seeing_forecast/
 |          └── utils/
 |                └── resampler.py       # Script to weather data to a specified time frequency
 |
-└── plots/
+└── plots/                         # Folder to save the plots
 
 🛠️ Usage
 
