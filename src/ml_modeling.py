@@ -218,12 +218,12 @@ class PolynomialRegressionModel:
 
 class DenseNeuralNetworkModel:
     """
-    Modelo de red neuronal densa para regresión.
+    Regression DNN.
 
     Methods:
     --------
     train_and_evaluate(X_train, X_test, y_train, y_test) -> None
-        Entrena, evalúa el modelo y genera gráficos de diagnóstico.
+        Train, evaluate and plot DNN model.
     """
 
     def train_and_evaluate(self, X_train, X_test, y_train, y_test):
@@ -306,20 +306,20 @@ class MLModelingPipeline:
 
     def run_model(self, data_resample: pd.DataFrame, seeing: pd.DataFrame, model_name: str) -> None:
         """
-        Corre el modelo indicado por model_name con los datos dados.
+        Runs the model_name with the specified data.
 
         Inputs:
         -------
         data_resample : pd.DataFrame
-            Datos meteorológicos resampleados.
+            Met weather data resampled.
         seeing : pd.DataFrame
-            Datos de seeing.
+            Seeing data.
         model_name : str
-            Nombre del modelo a ejecutar. Opciones: 'random_forest', 'polynomial', 'dnn'.
+            Name of the model. Options: 'random_forest', 'polynomial', 'dnn'.
 
         Output:
         -------
-        None (imprime resultados y muestra gráficos según modelo)
+        None (print the results and show plots according to the model)
         """
         combined = self.preparer.prepare_data(data_resample, seeing)
         (X_train, X_test, y_train, y_test), _ = self.preprocessor.preprocess(combined)
