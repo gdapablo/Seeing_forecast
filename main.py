@@ -9,9 +9,9 @@ from src.ml_modeling import MLModelingPipeline
 def main():
     parser = argparse.ArgumentParser(description="Seeing Forecast Pipeline")
     parser.add_argument('--task', type=str, required=True,
-                        choices=['clean', 'visualize', 'ml'], help="Task to perform")
-    parser.add_argument('--dataset', type=str,
-                        choices=['WHT', 'INT', 'seeing'], help="Dataset to process or visualize")
+                        choices=['visualize', 'ml'], help="Task to perform")
+    #parser.add_argument('--dataset', type=str,
+    #                    choices=['WHT', 'INT', 'seeing'], help="Dataset to process or visualize")
     parser.add_argument('--visual_target', type=str,
                         choices=['monthly_means', 'yearly_means', 'seeing_month', 'seeing_variation'],
                         help="Visualization target")
@@ -20,27 +20,6 @@ def main():
     parser.add_argument('--save', action='store_true', help="Save the plots to disk")
 
     args = parser.parse_args()
-
-    if args.task == 'clean':
-        if args.dataset == 'WHT':
-            cleaner = WHTCleaner(folder_path='data/WHT_data')
-            df_wht = cleaner.load_data()
-            df_clean = cleaner.preprocess()
-            print("WHT data cleaned and loaded.")
-
-        elif args.dataset == 'INT':
-            cleaner = INTCleaner(folder_path='data/INT_data')
-            df_int = cleaner.load_data()
-            df_clean = cleaner.preprocess()
-            print("INT data cleaned and loaded.")
-
-        elif args.dataset == 'seeing':
-            cleaner = SeeingCleaner(filepath='data/seeing_data.csv')
-            df_seeing = cleaner.load_and_preprocess()
-            print("Seeing data cleaned and loaded.")
-
-        else:
-            print("Specify a valid dataset for cleaning: WHT, INT, o seeing.")
 
     if args.task == 'ml':
         if args.model is None:
