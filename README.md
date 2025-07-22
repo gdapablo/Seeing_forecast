@@ -28,17 +28,17 @@ Seeing_forecast/
 │   ├── ML_seeing.ipynb           # Seeing prediction (preprocessing + ML)  
 │   └── time_series.ipynb         # Time series forecasting for seeing  
 │  
-└── src/
-|    └── pre_process.py            # Script to preprocess raw INT/WHT data
-|    ├── ml_modelling.py           # Script for ML models selection (DNN, RFR, Polynomial) and training
-|    ├── visualizer.py             # Visualization and plots of weather and seeing data
-|    └── preprocess/
-|          ├── int_cleaner.py      # Loading and preprocessing of INT weather data
-|          ├── wht_cleaner.py      # Loading and preprocessing of WHT weather data
-|          ├── seeing_cleaner.py   # Loading and preprocessing archival seeing data
-|          └── utils/
-|                └── resampler.py       # Script to weather data to a specified time frequency
-|
+└── src/  
+|    └── pre_process.py            # Script to preprocess raw INT/WHT data   
+|    ├── ml_modelling.py           # Script for ML models selection (DNN, RFR, Polynomial) and training   
+|    ├── visualizer.py             # Visualization and plots of weather and seeing data   
+|    └── preprocess/   
+|          ├── int_cleaner.py      # Loading and preprocessing of INT weather data   
+|          ├── wht_cleaner.py      # Loading and preprocessing of WHT weather data   
+|          ├── seeing_cleaner.py   # Loading and preprocessing archival seeing data   
+|          └── utils/   
+|                └── resampler.py       # Script to weather data to a specified time frequency   
+|   
 └── plots/                         # Folder to save the plots  
 
 🛠️ Usage
