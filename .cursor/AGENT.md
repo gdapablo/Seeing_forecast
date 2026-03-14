@@ -86,7 +86,7 @@ If you encounter a blocker or a bug you cannot resolve within two attempts:
 
     Wait for user intervention.
 
-6. Skill-Based Execution & Technical Standards
+## 6. Skill-Based Execution & Technical Standards
 
 To ensure scientific rigor and code quality, the agent must consult the technical blueprints located in .cursor/skills/ before starting any task.
 Skill Mapping
