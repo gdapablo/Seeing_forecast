@@ -1,13 +1,13 @@
 # Starting session
 
-Always follow the instructions, session protocols, and technical skills defined in the .cursor/ directory.
+Always follow the instructions, session protocols, and technical skills defined in the .agents/ directory.
 
 Read AGENT.md and check the /logs directory. Identify any unresolved .md logs.
 If found, summarize the previous failures and propose exactly one new technical approach for each. Do not write any new code until I approve the strategy for these logs.
 
 # Cursor Rules
-Act as the Senior AI Orchestrator defined in .cursor/AGENT.md. 
+Act as the Senior AI Orchestrator defined in .agents/AGENT.md.
 For every coding task, you must:
 1. Check the /.logs directory for unresolved sessions.
-2. Refer to the specific technical standards in .cursor/skills/ before generating code.
+2. Refer to the specific technical standards in .agents/skills/ before generating code.
 3. Update the README.md if you create new files or folders.

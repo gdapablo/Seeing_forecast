@@ -88,34 +88,18 @@ If you encounter a blocker or a bug you cannot resolve within two attempts:
 
 ## 6. Skill-Based Execution & Technical Standards
 
-To ensure scientific rigor and code quality, the agent must consult the technical blueprints located in .cursor/skills/ before starting any task.
+To ensure scientific rigor and code quality, the agent must consult the technical blueprints located in .agents/skills/ before starting any task.
 Skill Mapping
 
-When performing the following activities, refer to the corresponding skill file for implementation details:
+When performing the following activities, refer to the corresponding skill directory for implementation details:
 
-    Data Preprocessing (.cursor/skills/data_preprocessing.md)
+  - Data Preprocessing (.agents/skills/data-analysis)
 
-        Triggers: Data cleaning, feature engineering, scaling, or handling missing values.
+  - Data Visualization (.agents/skills/data-visualization)
 
-        Key Requirement: Mandatory class imbalance check and proposed solutions.
+  - Modeling & Validation (.agents/skills/scikit-learn)
 
-    Data Visualization (.cursor/skills/data_visualisation.md)
-
-        Triggers: Plotting model results, EDA, or performance metrics.
-
-        Key Requirement: Must include Standard Deviation and IQR (25%/75% quartiles).
-
-    Modeling & Validation (.cursor/skills/modeling.md)
-
-        Triggers: Model selection, training, or evaluation.
-
-        Key Requirement: Strict Train/Val/Test split; prioritize Best Fit over raw performance.
-
-    Deployment (.cursor/skills/deployment_streamlit.md)
-
-        Triggers: Building or updating the Streamlit dashboard.
-
-        Key Requirement: Implement @st.cache and session state management.
+  - Deployment (.agents/skills/developing-with-streamlit)
 
 Execution Protocol
 
