@@ -1,8 +1,9 @@
 # Seeing_forecast
 
-Seeing Forecast for Astronomical Observations
+Predicting astronomical seeing conditions using machine learning to optimize observation schedules.
 
 Predicting atmospheric seeing and humidity conditions at the Observatorio del Roque de los Muchachos (ORM) using historical meteorological and DIMM data.
+
 📌 Overview
 
 This repository contains machine learning and time series models to forecast astronomical seeing and humidity at ORM, leveraging historical data from the Isaac Newton Telescope (INT) and William Herschel Telescope (WHT).
@@ -13,6 +14,22 @@ Key Features:
     Machine learning models for seeing and humidity prediction.
 
     Time series analysis for seeing forecasts.
+
+🏗️ Project Architecture
+
+Agent Note: This section must be updated every time a new directory or core file is added.
+
+        /data: Contains .csv files for raw and processed atmospheric data.
+
+        /notebooks: Iterative research, EDA, and model prototyping.
+
+        /scripts: Modular Python logic for cleaning, training, and inference.
+
+        /models: Serialized model files (.pkl, .joblib, or .h5).
+
+        /skills: Standard Operating Procedures (SOPs) for the AI Agent.
+
+        /logs: Active session memory and error tracking.
 
 📂 Repository Structure
 
