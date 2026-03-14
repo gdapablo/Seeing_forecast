@@ -3,6 +3,9 @@
 ## 1. Project Overview & Architecture
 
 This project, Seeing Forecast, uses Machine Learning to predict astronomical "seeing" conditions. The goal is to provide high-accuracy forecasts for astronomical observations based on atmospheric and environmental data.
+
+Documentation Sync: Every time a new file or folder is created, the README.md must be updated immediately with a brief description of its purpose and how it fits into the pipeline.
+
 Repository Map
 
     /data: Raw and processed datasets.
