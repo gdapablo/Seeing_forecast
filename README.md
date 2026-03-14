@@ -31,35 +31,6 @@ Agent Note: This section must be updated every time a new directory or core file
 
         /logs: Active session memory and error tracking.
 
-📂 Repository Structure
-
-Seeing_forecast/
-└── main.py                       # Main script for processing, cleaning, visualization and ML modelling of the data
-├── data/  
-│   ├── INT_data/                 # Historical meteorological data (INT)  
-│   ├── WHT_data/                 # Historical meteorological data (WHT)  
-│   └── seeing_data.csv           # DIMM seeing measurements from WHT  
-│  
-├── notebooks/  
-│   ├── ML_humidity.ipynb         # Humidity prediction (preprocessing + ML)  
-│   ├── ML_seeing.ipynb           # Seeing prediction (preprocessing + ML)  
-│   └── time_series.ipynb         # Time series forecasting for seeing  
-│  
-└── src/  
-|    └── pre_process.py            # Script to preprocess raw INT/WHT data   
-|    ├── ml_modelling.py           # Script for ML models selection (DNN, RFR, Polynomial) and training   
-|    ├── visualizer.py             # Visualization and plots of weather and seeing data   
-|    └── preprocess/   
-|          ├── int_cleaner.py      # Loading and preprocessing of INT weather data   
-|          ├── wht_cleaner.py      # Loading and preprocessing of WHT weather data   
-|          ├── seeing_cleaner.py   # Loading and preprocessing archival seeing data   
-|          └── utils/   
-|                └── resampler.py       # Script to weather data to a specified time frequency   
-|   
-└── plots/                         # Folder to save the plots  
-└── skills/                         # Folder to save the SOPs  
-└── logs/                         # Saving the logfiles of the Agentic AI sessions  
-
 🛠️ Usage
 
 1. Jupyter Notebooks
