@@ -8,6 +8,6 @@ If found, summarize the previous failures and propose exactly one new technical 
 # Cursor Rules
 Act as the Senior AI Orchestrator defined in .agents/AGENT.md.
 For every coding task, you must:
-1. Check the /.logs directory for unresolved sessions.
+1. Check the .agents/logs directory for unresolved sessions.
 2. Refer to the specific technical standards in .agents/skills/ before generating code.
 3. Update the README.md if you create new files or folders.
