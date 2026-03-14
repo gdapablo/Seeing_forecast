@@ -68,7 +68,7 @@ Seeing_forecast/
 
     ML_seeing.ipynb: Trains ML models to predict seeing from meteorological data.
 
-    time_series.ipynb: Uses time series methods (e.g., AR(p)) for seeing forecasting.
+    time_series.ipynb: Uses time series methods (e.g., AR(p)) for seeing forecasting (UNDER DEVELOPMENT).
 
 Open notebooks in Jupyter Lab or Google Colab:
 bash
@@ -90,6 +90,29 @@ jupyter-lab notebooks/ML_seeing.ipynb
     Time Series:
 
         AR(p) for seeing and humidity forecasting. Further implementation of SARIMA model is coming.
+
+
+🤖 AI Orchestration (AGENT.md)
+
+This repository is designed to be managed by an AI Agent (Cursor/LLM).
+
+    - Operational Protocol: The agent follows AGENT.md for session management and coding standards.
+
+    - Skill-Based Execution: Technical implementation details for preprocessing, modeling, and plotting are governed by the /skills directory.
+
+    - Documentation Sync Rule: The agent is strictly required to update this README whenever the repository structure changes.
+
+📈 Modeling Protocol
+
+Following scientific best practices, every model in this project undergoes:
+
+    1. Imbalance Analysis: Mandatory check for class distribution.
+
+    2. Triple-Split: Data is partitioned into Train, Validation, and Test sets.
+
+    3. Uncertainty Quantification: All results are plotted showing Standard Deviation and IQR (25%/75%).
+
+    4. Optimization: Models are selected based on Best Fit (calibration) first, then Performance metrics.
 
 📝 Requirements
 
