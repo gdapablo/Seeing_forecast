@@ -57,6 +57,8 @@ Seeing_forecast/
 |                └── resampler.py       # Script to weather data to a specified time frequency   
 |   
 └── plots/                         # Folder to save the plots  
+└── skills/                         # Folder to save the SOPs  
+└── logs/                         # Saving the logfiles of the Agentic AI sessions  
 
 🛠️ Usage
 
