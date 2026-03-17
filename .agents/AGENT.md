@@ -2,7 +2,7 @@
 
 ## 1. Project Overview & Architecture
 
-This project, Seeing Forecast, uses Machine Learning to predict astronomical "seeing" conditions. The goal is to provide high-accuracy forecasts for astronomical observations based on atmospheric and environmental data.
+This project, Seeing Forecast, uses Machine Learning to predict astronomical "seeing" conditions. The goal is to provide high-accuracy forecasts for astronomical observations based on atmospheric and environmental data. This project requires rigorous scientific methodology as documented in README.md: imbalance analysis, triple-split validation, and uncertainty quantification. These practices are critical for credible astronomical research but are often missed in notebook-based workflows.
 
 Documentation Sync: Every time a new file or folder is created, the README.md must be updated immediately with a brief description of its purpose and how it fits into the pipeline.
 
@@ -34,6 +34,20 @@ Jupyter Notebooks (.ipynb)
     Narrative: Write explanatory markdown cells before every code block.
 
     Simplicity: Prioritize the most readable and maintainable solution over "clever" one-liners.
+
+    name: Scientific Modeling Protocol
+    description: Ensures all ML experiments follow the project's scientific best practices.
+
+#### What to Check
+
+#### 1. Data Splitting
+**Look for**: Evidence of proper train/validation/test separation in PR changes.
+
+**GOOD**: Explicit split using scikit-learn's `train_test_split` with random seed:
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
 ## 3. Modeling & Evaluation Protocol
 
