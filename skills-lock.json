@@ -20,6 +20,11 @@
       "source": "davila7/claude-code-templates",
       "sourceType": "github",
       "computedHash": "f03f68164d506a6cdf7e8cae1e46bd38c0e1327248d9aaeece66cb4b6392a3c7"
+    },
+    "tensorflow-neural-networks": {
+      "source": "thebushidocollective/han",
+      "sourceType": "github",
+      "computedHash": "0023593c6b300b8cce8bf8c34d168cb2558ef900879c442ee355e1054c46b132"
     }
   }
 }
